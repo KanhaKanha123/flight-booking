@@ -76,7 +76,7 @@ export class BookingComponent {
      * Simple reference generator
      * for demo purposes.
      */
-    const bookingReference = `BK-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
+    const bookingReference = this.generateBookingId();
 
     this.bookingService.saveBookingDetails({
       bookingReference,
@@ -89,5 +89,9 @@ export class BookingComponent {
     });
 
     this.router.navigate(['/confirmation']);
+  }
+
+  generateBookingId(): string {
+    return 'BK-' + Date.now() + '-' + Math.random().toString(36).substring(2, 8).toUpperCase();
   }
 }

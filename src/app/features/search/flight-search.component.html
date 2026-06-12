@@ -135,13 +135,7 @@
           Return date must be after departure date.
         </p>
       }
-      <button
-        mat-flat-button
-        color="primary"
-        type="submit"
-        class="search-button"
-        [disabled]="loading()"
-      >
+      <button mat-flat-button type="submit" class="search-button" [disabled]="loading()">
         @if (!loading()) {
           Search Flights
         } @else {
