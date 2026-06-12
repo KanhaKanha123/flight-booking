@@ -1,11 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
-import {
-  Flight,
-  FlightSearchCriteria,
-  FlightSearchResult,
-} from '../models/flight.model';
+import { Flight, FlightSearchCriteria, FlightSearchResult } from '../models/flight.model';
 import { FLIGHTS } from '../../mock-data/flights';
 
 @Injectable({
@@ -30,8 +26,7 @@ export class FlightService {
    * search form can be restored when users
    * navigate back from later steps.
    */
-  private readonly searchCriteriaSubject =
-    new BehaviorSubject<FlightSearchCriteria | null>(null);
+  private readonly searchCriteriaSubject = new BehaviorSubject<FlightSearchCriteria | null>(null);
 
   readonly searchCriteria$ = this.searchCriteriaSubject.asObservable();
 
@@ -40,9 +35,7 @@ export class FlightService {
    * For round-trip bookings both searches
    * are executed and combined into a single result.
    */
-  searchFlights(
-    criteria: FlightSearchCriteria,
-  ): Observable<FlightSearchResult> {
+  searchFlights(criteria: FlightSearchCriteria): Observable<FlightSearchResult> {
     const departureFlights$ = this.findFlights(
       criteria.originId,
       criteria.destinationId,
@@ -51,11 +44,7 @@ export class FlightService {
 
     const returnFlights$ =
       criteria.roundTrip && criteria.returnDate
-        ? this.findFlights(
-            criteria.destinationId,
-            criteria.originId,
-            criteria.returnDate,
-          )
+        ? this.findFlights(criteria.destinationId, criteria.originId, criteria.returnDate)
         : of([]);
 
     return combineLatest([departureFlights$, returnFlights$]).pipe(
@@ -100,11 +89,7 @@ export class FlightService {
    * Simulates an API call using RxJS and
    * mock data.
    */
-  private findFlights(
-    originId: number,
-    destinationId: number,
-    date?: Date,
-  ): Observable<Flight[]> {
+  private findFlights(originId: number, destinationId: number, date?: Date): Observable<Flight[]> {
     if (!date) {
       return of([]);
     }
@@ -141,9 +126,7 @@ export class FlightService {
     const d = new Date(date);
 
     const year = d.getFullYear();
-
     const month = String(d.getMonth() + 1).padStart(2, '0');
-
     const day = String(d.getDate()).padStart(2, '0');
 
     return `${year}-${month}-${day}`;
@@ -155,7 +138,6 @@ export class FlightService {
    */
   resetSearch(): void {
     this.searchCriteriaSubject.next(null);
-
     this.flightSearchResult.set(null);
   }
 }

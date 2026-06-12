@@ -53,27 +53,23 @@ for (const origin of CITIES) {
         departureDate.setDate(today.getDate() + dayOffset);
 
         const departureHour = DEPARTURE_HOURS[Math.floor(Math.random() * DEPARTURE_HOURS.length)];
-
         const departureMinute = [0, 15, 30, 45][Math.floor(Math.random() * 4)];
 
         departureDate.setHours(departureHour, departureMinute, 0, 0);
 
         // Generate random flight duration.
         const durationHours = Math.floor(Math.random() * 10) + 2;
-
         const durationMinutes = [0, 15, 30, 45][Math.floor(Math.random() * 4)];
 
         const arrivalDate = new Date(departureDate);
 
         arrivalDate.setHours(arrivalDate.getHours() + durationHours);
-
         arrivalDate.setMinutes(arrivalDate.getMinutes() + durationMinutes);
 
         // Generate random pricing and seat availability.
         const price = Math.floor(Math.random() * 900) + 100;
 
         const seatsAvailable = Math.floor(Math.random() * 40) + 5;
-
         const airline = AIRLINES[Math.floor(Math.random() * AIRLINES.length)];
 
         FLIGHTS.push({

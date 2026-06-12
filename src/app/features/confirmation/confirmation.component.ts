@@ -32,21 +32,28 @@ export class ConfirmationComponent implements OnInit {
     }
   }
 
+  /**
+   * Calculates the total price of the booking based
+   * on the selected flights and number of passengers.
+   */
   get totalPrice(): number {
     if (!this.booking) {
       return 0;
     }
 
     const outboundPrice = this.booking.outboundFlight.price;
-
     const returnPrice = this.booking.returnFlight?.price ?? 0;
 
     return (outboundPrice + returnPrice) * this.booking.passengers;
   }
 
+  /**
+   * Clears the current booking and search state,
+   * then navigates the user back to the search page
+   * to start a new booking.
+   */
   bookAnotherFlight(): void {
     this.bookingService.clearBooking();
-
     this.flightService.resetSearch();
 
     this.router.navigate(['/search']);

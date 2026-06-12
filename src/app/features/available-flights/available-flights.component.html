@@ -1,58 +1,57 @@
 <div class="available-flights-container">
   <header class="page-header">
-    <span class="step-indicator"> Step 2 of 4 </span>
+    <span class="step-indicator">Step 2 of 4</span>
     <h1>Available Flights</h1>
     <p>Select your preferred outbound and return flights.</p>
   </header>
-
-  @if (hasSearchResults) {
+  @if (hasSearchResults()) {
     <div class="page-layout">
       <aside class="sidebar">
-        <app-filter-sidebar [airlines]="availableAirlines" (filtersChanged)="applyFilters($event)">
+        <app-filter-sidebar
+          [airlines]="availableAirlines()"
+          (filtersChanged)="applyFilters($event)"
+        >
         </app-filter-sidebar>
       </aside>
       <div class="flight-results">
-        @if (departureFlightsFound) {
+        @if (departureFlightsFound()) {
           <section class="flight-section">
             <div class="section-header">
               <h2>Outbound Flight</h2>
               <span class="flight-count">
-                {{ departureFlights.length }}
+                {{ departureFlights().length }}
                 option(s)
               </span>
             </div>
-
-            @for (flight of departureFlights; track flight.flightNumber) {
+            @for (flight of departureFlights(); track flight.flightNumber) {
               <app-flight-card
                 [flight]="flight"
-                [selected]="selectedOutboundFlight?.id === flight.id"
+                [selected]="selectedOutboundFlight()?.id === flight.id"
                 (flightSelected)="selectOutboundFlight($event)"
               >
               </app-flight-card>
             }
           </section>
 
-          @if (hasReturnFlights) {
+          @if (hasReturnFlights()) {
             <section class="flight-section">
               <div class="section-header">
                 <h2>Return Flight</h2>
                 <span class="flight-count">
-                  {{ returnFlights.length }}
+                  {{ returnFlights().length }}
                   option(s)
                 </span>
               </div>
-
-              @for (flight of returnFlights; track flight.flightNumber) {
+              @for (flight of returnFlights(); track flight.flightNumber) {
                 <app-flight-card
                   [flight]="flight"
-                  [selected]="selectedReturnFlight?.id === flight.id"
+                  [selected]="selectedReturnFlight()?.id === flight.id"
                   (flightSelected)="selectReturnFlight($event)"
                 >
                 </app-flight-card>
               }
             </section>
           }
-
           <div class="page-actions">
             <button type="button" class="secondary-btn" (click)="searchAgain()">
               Modify Search
@@ -60,7 +59,7 @@
             <button
               type="button"
               class="primary-btn"
-              [disabled]="!canContinue"
+              [disabled]="!canContinue()"
               (click)="continueToBooking()"
             >
               Continue Booking

@@ -1,15 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-
 import { Flight } from '../../core/models/flight.model';
 import { FlightFilters } from '../../core/models/filter-sidebar.model';
-
 import { FlightService } from '../../core/services/flight.service';
 import { BookingService } from '../../core/services/booking.service';
-
 import { getCityLabel } from '../../mock-data/cities';
-
 import { FlightCardComponent } from '../../shared/components/flight-card/flight-card.component';
 import { FilterSidebarComponent } from '../../shared/components/filter-sidebar/filter-sidebar.component';
 
@@ -22,36 +18,42 @@ import { FilterSidebarComponent } from '../../shared/components/filter-sidebar/f
 })
 export class AvailableFlightsComponent implements OnInit {
   readonly flightService = inject(FlightService);
-
   readonly bookingService = inject(BookingService);
-
   readonly router = inject(Router);
 
   /**
-   * Cached copy of the original search results.
-   * Filters are always applied against these collections
-   * so users can freely change filter combinations without
-   * losing the complete result set.
+   * Original unfiltered flight collections.
+   * Filters are always applied against these
+   * arrays to avoid losing data.
    */
   private allDepartureFlights: Flight[] = [];
-
   private allReturnFlights: Flight[] = [];
 
   /**
-   * Unique airline values extracted from the search results.
-   * Used to populate the airline filter options.
+   * UI state.
    */
-  availableAirlines: string[] = [];
+  readonly availableAirlines = signal<string[]>([]);
+  readonly isRoundTrip = signal(false);
+  readonly departureFlights = signal<Flight[]>([]);
+  readonly returnFlights = signal<Flight[]>([]);
+  readonly selectedOutboundFlight = signal<Flight | null>(null);
+  readonly selectedReturnFlight = signal<Flight | null>(null);
 
-  isRoundTrip = false;
+  /**
+   * Derived state.
+   */
+  readonly departureFlightsFound = computed(() => this.departureFlights().length > 0);
+  readonly hasReturnFlights = computed(() => this.isRoundTrip() && this.returnFlights().length > 0);
+  readonly hasSearchResults = computed(
+    () => this.allDepartureFlights.length > 0 || this.allReturnFlights.length > 0,
+  );
+  readonly canContinue = computed(() => {
+    if (!this.isRoundTrip()) {
+      return !!this.selectedOutboundFlight();
+    }
 
-  departureFlights: Flight[] = [];
-
-  returnFlights: Flight[] = [];
-
-  selectedOutboundFlight?: Flight;
-
-  selectedReturnFlight?: Flight;
+    return !!this.selectedOutboundFlight() && !!this.selectedReturnFlight();
+  });
 
   ngOnInit(): void {
     this.initializeState();
@@ -60,10 +62,6 @@ export class AvailableFlightsComponent implements OnInit {
   /**
    * Initializes component state using
    * previously stored search results.
-   *
-   * Users reaching this page directly
-   * without performing a search are
-   * redirected back to the search page.
    */
   private initializeState(): void {
     const searchResult = this.flightService.getFlightSearchResult();
@@ -75,28 +73,23 @@ export class AvailableFlightsComponent implements OnInit {
     }
 
     const searchCriteria = this.flightService.getSearchCriteria();
-
-    this.isRoundTrip = !!searchCriteria?.roundTrip;
-
-    this.departureFlights = searchResult.departureFlights ?? [];
-
-    this.returnFlights = searchResult.returnFlights ?? [];
-
-    this.allDepartureFlights = [...this.departureFlights];
-
-    this.allReturnFlights = [...this.returnFlights];
+    this.isRoundTrip.set(!!searchCriteria?.roundTrip);
+    this.departureFlights.set(searchResult.departureFlights ?? []);
+    this.returnFlights.set(searchResult.returnFlights ?? []);
+    this.allDepartureFlights = [...this.departureFlights()];
+    this.allReturnFlights = [...this.returnFlights()];
 
     /**
      * Generates airline filter options
      * from the available search results.
      */
-    this.availableAirlines = [
+    this.availableAirlines.set([
       ...new Set(
-        [...this.departureFlights, ...this.returnFlights]
+        [...this.departureFlights(), ...this.returnFlights()]
           .map((flight) => flight.airline)
           .filter(Boolean),
       ),
-    ];
+    ]);
 
     this.applyFilters({
       airlines: [],
@@ -105,53 +98,18 @@ export class AvailableFlightsComponent implements OnInit {
     });
   }
 
-  get departureFlightsFound(): boolean {
-    return this.departureFlights.length > 0;
-  }
-
-  get hasReturnFlights(): boolean {
-    return this.isRoundTrip && this.returnFlights.length > 0;
-  }
-
-  /**
-   * Determines whether any flights were returned
-   * from the original search request.
-   */
-  get hasSearchResults(): boolean {
-    return this.allDepartureFlights.length > 0 || this.allReturnFlights.length > 0;
-  }
-
-  /**
-   * Determines whether the user can continue
-   * to the booking step.
-   *
-   * One-way trip:
-   * - Outbound flight must be selected
-   *
-   * Round-trip:
-   * - Both outbound and return flights
-   *   must be selected.
-   */
-  get canContinue(): boolean {
-    if (!this.isRoundTrip) {
-      return !!this.selectedOutboundFlight;
-    }
-
-    return !!this.selectedOutboundFlight && !!this.selectedReturnFlight;
-  }
-
   /**
    * Stores the selected outbound flight.
    */
   selectOutboundFlight(flight: Flight): void {
-    this.selectedOutboundFlight = flight;
+    this.selectedOutboundFlight.set(flight);
   }
 
   /**
    * Stores the selected return flight.
    */
   selectReturnFlight(flight: Flight): void {
-    this.selectedReturnFlight = flight;
+    this.selectedReturnFlight.set(flight);
   }
 
   /**
@@ -159,13 +117,13 @@ export class AvailableFlightsComponent implements OnInit {
    * navigates to the booking page.
    */
   continueToBooking(): void {
-    if (!this.canContinue) {
+    if (!this.canContinue()) {
       return;
     }
 
     this.bookingService.saveSelectedFlights(
-      this.selectedOutboundFlight!,
-      this.selectedReturnFlight,
+      this.selectedOutboundFlight()!,
+      this.selectedReturnFlight() ?? undefined,
     );
 
     this.router.navigate(['/booking']);
@@ -188,9 +146,9 @@ export class AvailableFlightsComponent implements OnInit {
    * to both outbound and return flight results.
    */
   applyFilters(filters: FlightFilters): void {
-    this.departureFlights = this.filterFlights(this.allDepartureFlights, filters);
+    this.departureFlights.set(this.filterFlights(this.allDepartureFlights, filters));
 
-    this.returnFlights = this.filterFlights(this.allReturnFlights, filters);
+    this.returnFlights.set(this.filterFlights(this.allReturnFlights, filters));
   }
 
   /**
@@ -224,13 +182,10 @@ export class AvailableFlightsComponent implements OnInit {
       switch (slot) {
         case 'Morning':
           return hour >= 5 && hour < 12;
-
         case 'Afternoon':
           return hour >= 12 && hour < 18;
-
         case 'Evening':
           return hour >= 18 || hour < 5;
-
         default:
           return false;
       }
@@ -240,10 +195,6 @@ export class AvailableFlightsComponent implements OnInit {
   /**
    * Sorts flights according to the
    * selected sort criteria.
-   *
-   * Supported options:
-   * - price
-   * - duration
    */
   private sortFlights(flights: Flight[], sortBy: 'price' | 'duration'): Flight[] {
     const sorted = [...flights];
@@ -260,8 +211,6 @@ export class AvailableFlightsComponent implements OnInit {
   /**
    * Converts duration strings such as
    * "2h 30m" into total minutes.
-   *
-   * This simplifies duration-based sorting.
    */
   private durationToMinutes(duration: string): number {
     const [hours, minutes] = duration.split('h');

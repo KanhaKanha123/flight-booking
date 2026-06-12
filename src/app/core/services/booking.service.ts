@@ -1,6 +1,5 @@
 import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-
 import { Flight } from '../models/flight.model';
 import { BookingDetails } from '../models/booking.model';
 
@@ -37,9 +36,7 @@ export class BookingService {
    * Observable-based selected flight state.
    * Retained for compatibility with RxJS consumers.
    */
-  private readonly selectedFlightSubject = new BehaviorSubject<Flight | null>(
-    null,
-  );
+  private readonly selectedFlightSubject = new BehaviorSubject<Flight | null>(null);
 
   readonly selectedFlight$ = this.selectedFlightSubject.asObservable();
 
@@ -113,13 +110,9 @@ export class BookingService {
    */
   clearBooking(): void {
     this.outboundFlight.set(null);
-
     this.returnFlight.set(null);
-
     this.bookingDetails.set(null);
-
     this.isRoundTrip.set(false);
-
     this.selectedFlightSubject.next(null);
   }
 }

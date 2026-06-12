@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
 import { FlightFilters } from '../../../core/models/filter-sidebar.model';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +21,7 @@ export class FilterSidebarComponent {
 
   readonly departureSlots = ['Morning', 'Afternoon', 'Evening'];
 
+  // Form group to manage filter selections
   filterForm = this.fb.group({
     airlines: [[] as string[]],
     departureSlots: [[] as string[]],
@@ -38,9 +38,9 @@ export class FilterSidebarComponent {
     });
   }
 
+  // Helper methods for toggling filter options and checking if an option is selected
   toggleAirline(airline: string): void {
     const selected = [...(this.filterForm.value.airlines ?? [])];
-
     const index = selected.indexOf(airline);
 
     if (index > -1) {
@@ -54,6 +54,7 @@ export class FilterSidebarComponent {
     });
   }
 
+  // Helper methods for toggling filter options and checking if an option is selected
   toggleSlot(slot: string): void {
     const selected = [...(this.filterForm.value.departureSlots ?? [])];
 

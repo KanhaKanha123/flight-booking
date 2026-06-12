@@ -4,9 +4,7 @@ import { BookingService } from '../services/booking.service';
 
 export const confirmationGuard: CanActivateFn = () => {
   const bookingService = inject(BookingService);
-
   const router = inject(Router);
-
   const booking = bookingService.getBookingDetails();
 
   if (booking) {

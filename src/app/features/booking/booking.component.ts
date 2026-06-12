@@ -25,9 +25,7 @@ import { BookingService } from '../../core/services/booking.service';
 })
 export class BookingComponent {
   private readonly fb = inject(FormBuilder);
-
   private readonly router = inject(Router);
-
   private readonly bookingService = inject(BookingService);
 
   /**
@@ -35,7 +33,6 @@ export class BookingComponent {
    * on the Available Flights page.
    */
   readonly outboundFlight = this.bookingService.getOutboundFlight();
-
   readonly returnFlight = this.bookingService.getReturnFlight();
 
   /**
@@ -56,9 +53,7 @@ export class BookingComponent {
    */
   get totalPrice(): number {
     const passengers = Number(this.bookingForm.value.passengers ?? 1);
-
     const outboundPrice = this.outboundFlight?.price ?? 0;
-
     const returnPrice = this.returnFlight?.price ?? 0;
 
     return (outboundPrice + returnPrice) * passengers;

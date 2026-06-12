@@ -111,7 +111,7 @@
             <input
               matInput
               [matDatepicker]="returnPicker"
-              [min]="today"
+              [min]="searchForm.value.departureDate || today"
               formControlName="returnDate"
               placeholder="Choose date"
             />

@@ -11,30 +11,23 @@
 .step-indicator {
   display: inline-block;
   margin-bottom: 8px;
-
   color: #006ce4;
-
   font-size: 12px;
   font-weight: 600;
-
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .page-header h1 {
   margin: 0 0 12px;
-
   font-size: 48px;
   font-weight: 700;
-
   color: #0f172a;
 }
 
 .page-header p {
   margin: 0;
-
   font-size: 18px;
-
   color: #64748b;
 }
 
@@ -56,13 +49,9 @@
 
 .flight-section {
   background: white;
-
   border-radius: 20px;
-
   padding: 32px;
-
   margin-bottom: 24px;
-
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
 }
 
@@ -70,7 +59,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   margin-bottom: 24px;
 }
 
@@ -88,22 +76,17 @@
   display: flex;
   justify-content: flex-end;
   gap: 16px;
-
   margin-top: 32px;
 }
 
 .secondary-btn {
   min-width: 140px;
   height: 48px;
-
   border: 1px solid #d0d7de;
   border-radius: 12px;
-
   background: white;
   color: #0f172a;
-
   font-weight: 600;
-
   cursor: pointer;
 }
 
