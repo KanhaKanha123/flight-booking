@@ -1,0 +1,99 @@
+@if (booking; as booking) {
+  <div class="confirmation-container">
+    <section class="success-banner">
+      <div class="success-icon">✓</div>
+      <h1>Booking Confirmed</h1>
+      <p>Your reservation has been successfully created.</p>
+    </section>
+    <section class="booking-reference-card">
+      <div class="reference-section">
+        <span class="label"> Booking Reference </span>
+        <div class="reference-id">
+          {{ booking.bookingReference }}
+        </div>
+      </div>
+      <div class="reference-section">
+        <span class="label"> Booking Date </span>
+        <div>
+          {{ bookingDate | date: 'dd MMM yyyy HH:mm' }}
+        </div>
+      </div>
+      <div class="reference-section">
+        <span class="label"> Status </span>
+        <div class="status-confirmed">Confirmed</div>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Passenger Details</h2>
+      <div class="details-grid">
+        <div>
+          <span class="label"> Full Name </span>
+          <div>
+            {{ booking.fullName }}
+          </div>
+        </div>
+        <div>
+          <span class="label"> Email </span>
+          <div>
+            {{ booking.email }}
+          </div>
+        </div>
+        <div>
+          <span class="label"> Contact Number </span>
+          <div>
+            {{ booking.contactNumber }}
+          </div>
+        </div>
+        <div>
+          <span class="label"> Passengers </span>
+          <div>
+            {{ booking.passengers }}
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="flight-section">
+      <h2>Flight Details</h2>
+      <app-flight-summary-card title="Outbound Flight" [flight]="booking.outboundFlight">
+      </app-flight-summary-card>
+      @if (booking.returnFlight) {
+        <app-flight-summary-card title="Return Flight" [flight]="booking.returnFlight">
+        </app-flight-summary-card>
+      }
+    </section>
+    <section class="card fare-summary">
+      <h2>Payment Summary</h2>
+      <div class="fare-row">
+        <span> Outbound Flight </span>
+        <span> €{{ booking.outboundFlight.price }} </span>
+      </div>
+      @if (booking.returnFlight) {
+        <div class="fare-row">
+          <span> Return Flight </span>
+          <span> €{{ booking.returnFlight.price }} </span>
+        </div>
+      }
+      <div class="fare-row">
+        <span> Number of Passengers </span>
+        <span>
+          {{ booking.passengers }}
+        </span>
+      </div>
+      <div class="grand-total">
+        Total Paid
+        <span> €{{ totalPrice }} </span>
+      </div>
+    </section>
+    <div class="actions">
+      <button type="button" class="primary-btn" (click)="bookAnotherFlight()">
+        Book Another Flight
+      </button>
+    </div>
+  </div>
+} @else {
+  <div class="empty-state">
+    <h2>Booking Not Found</h2>
+    <p>No booking information is available.</p>
+    <button routerLink="/search" type="button" class="primary-btn">Search Flights</button>
+  </div>
+}

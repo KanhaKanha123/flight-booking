@@ -1,0 +1,45 @@
+<article class="flight-card" [class.flight-card--selected]="selected">
+  <div class="flight-card__left">
+    <div class="airline">
+      {{ flight.airline }}
+    </div>
+    <div class="flight-number">
+      {{ flight.flightNumber }}
+    </div>
+  </div>
+  <div class="flight-card__center">
+    <div class="airport">
+      <div class="time">
+        {{ flight.departureDate | date: 'HH:mm' }}
+      </div>
+      <div class="city">
+        {{ getCityLabel(flight.originId) }}
+      </div>
+    </div>
+    <div class="route">
+      <div class="duration">
+        {{ flight.duration }}
+      </div>
+      <div class="empty-state__icon">
+        <mat-icon>flight_takeoff</mat-icon>
+      </div>
+    </div>
+    <div class="airport">
+      <div class="time">
+        {{ flight.arrivalDate | date: 'HH:mm' }}
+      </div>
+      <div class="city">
+        {{ getCityLabel(flight.destinationId) }}
+      </div>
+    </div>
+  </div>
+  <div class="flight-card__right">
+    <div class="price">€{{ flight.price }}</div>
+    <div class="price-label">per passenger</div>
+    <div class="seats">
+      {{ flight.seatsAvailable }}
+      seats left
+    </div>
+    <button type="button" class="book-btn" (click)="selectFlight()">Book</button>
+  </div>
+</article>

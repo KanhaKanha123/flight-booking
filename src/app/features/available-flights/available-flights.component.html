@@ -1,0 +1,88 @@
+<div class="available-flights-container">
+  <header class="page-header">
+    <span class="step-indicator"> Step 2 of 4 </span>
+    <h1>Available Flights</h1>
+    <p>Select your preferred outbound and return flights.</p>
+  </header>
+
+  @if (hasSearchResults) {
+    <div class="page-layout">
+      <aside class="sidebar">
+        <app-filter-sidebar [airlines]="availableAirlines" (filtersChanged)="applyFilters($event)">
+        </app-filter-sidebar>
+      </aside>
+      <div class="flight-results">
+        @if (departureFlightsFound) {
+          <section class="flight-section">
+            <div class="section-header">
+              <h2>Outbound Flight</h2>
+              <span class="flight-count">
+                {{ departureFlights.length }}
+                option(s)
+              </span>
+            </div>
+
+            @for (flight of departureFlights; track flight.flightNumber) {
+              <app-flight-card
+                [flight]="flight"
+                [selected]="selectedOutboundFlight?.id === flight.id"
+                (flightSelected)="selectOutboundFlight($event)"
+              >
+              </app-flight-card>
+            }
+          </section>
+
+          @if (hasReturnFlights) {
+            <section class="flight-section">
+              <div class="section-header">
+                <h2>Return Flight</h2>
+                <span class="flight-count">
+                  {{ returnFlights.length }}
+                  option(s)
+                </span>
+              </div>
+
+              @for (flight of returnFlights; track flight.flightNumber) {
+                <app-flight-card
+                  [flight]="flight"
+                  [selected]="selectedReturnFlight?.id === flight.id"
+                  (flightSelected)="selectReturnFlight($event)"
+                >
+                </app-flight-card>
+              }
+            </section>
+          }
+
+          <div class="page-actions">
+            <button type="button" class="secondary-btn" (click)="searchAgain()">
+              Modify Search
+            </button>
+            <button
+              type="button"
+              class="primary-btn"
+              [disabled]="!canContinue"
+              (click)="continueToBooking()"
+            >
+              Continue Booking
+            </button>
+          </div>
+        } @else {
+          <div class="empty-state">
+            <div class="empty-state__icon">✈</div>
+            <h2>No Flights Match Your Filters</h2>
+            <p>Try changing the selected filters.</p>
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="search-empty-state">
+      <div class="empty-state">
+        <div class="empty-state__icon">✈</div>
+        <h2>No Flights Found</h2>
+        <p>We couldn't find any flights for your search criteria.</p>
+        <button type="button" class="primary-btn" (click)="searchAgain()">Modify Search</button>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,173 @@
+.confirmation-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.success-banner {
+  text-align: center;
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+.success-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.success-banner h1 {
+  margin: 0 0 12px;
+  color: #0f172a;
+}
+
+.success-banner p {
+  margin: 0;
+  color: #64748b;
+}
+
+.booking-reference-card {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  background: white;
+  padding: 24px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+.reference-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.reference-id {
+  font-size: 22px;
+  font-weight: 700;
+  color: #006ce4;
+}
+
+.status-confirmed {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.card {
+  background: white;
+  padding: 24px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.details-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.flight-section {
+  margin-bottom: 24px;
+}
+
+.flight-section h2 {
+  margin-bottom: 20px;
+}
+
+.flight-section app-flight-summary-card {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.fare-summary {
+  margin-top: 24px;
+}
+
+.fare-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.grand-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #006ce4;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.primary-btn {
+  min-width: 220px;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background: #006ce4;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primary-btn:hover {
+  background: #0057b8;
+}
+
+.empty-state {
+  text-align: center;
+  background: white;
+  padding: 60px 24px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+@media (max-width: 768px) {
+  .booking-reference-card {
+    grid-template-columns: 1fr;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}

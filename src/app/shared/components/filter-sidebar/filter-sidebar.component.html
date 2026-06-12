@@ -1,0 +1,32 @@
+<form [formGroup]="filterForm" class="filter-sidebar">
+  <h2>Filters</h2>
+  <section class="filter-group">
+    <h3>Airline</h3>
+    @for (airline of airlines; track airline) {
+      <label class="checkbox-option">
+        <input
+          type="checkbox"
+          [checked]="isAirlineSelected(airline)"
+          (change)="toggleAirline(airline)"
+        />
+        <span>{{ airline }}</span>
+      </label>
+    }
+  </section>
+  <section class="filter-group">
+    <h3>Departure Time</h3>
+    @for (slot of departureSlots; track slot) {
+      <label class="checkbox-option">
+        <input type="checkbox" [checked]="isSlotSelected(slot)" (change)="toggleSlot(slot)" />
+        <span>{{ slot }}</span>
+      </label>
+    }
+  </section>
+  <section class="filter-group">
+    <h3>Sort By</h3>
+    <select formControlName="sortBy">
+      <option value="price">Price</option>
+      <option value="duration">Duration</option>
+    </select>
+  </section>
+</form>

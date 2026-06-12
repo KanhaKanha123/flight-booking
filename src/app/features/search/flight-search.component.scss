@@ -1,0 +1,349 @@
+.search-hero {
+  background: linear-gradient(135deg, #1e5a96 0%, #2a7ec7 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  width: 100%;
+}
+
+.search-hero app-page-shell {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+
+.search-panel {
+  display: grid;
+  gap: 2rem;
+  width: 100%;
+  max-width: 640px;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+}
+
+.search-form {
+  display: grid;
+  gap: 1.75rem;
+  width: 100%;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.search-form .mat-form-field {
+  width: 100%;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-flex {
+  background: #f8fafc;
+  border-radius: 1rem;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-start,
+.mat-form-field-appearance-outline .mat-form-field-outline-end,
+.mat-form-field-appearance-outline .mat-form-field-outline-gap {
+  border-color: #d1d5db;
+}
+
+.mat-form-field-appearance-outline.mat-form-field-invalid .mat-form-field-outline-start,
+.mat-form-field-appearance-outline.mat-form-field-invalid .mat-form-field-outline-end,
+.mat-form-field-appearance-outline.mat-form-field-invalid .mat-form-field-outline-gap {
+  border-color: #ef4444;
+}
+
+.mat-form-field .mat-form-field-infix {
+  padding: 0.85rem 0 0.25rem;
+}
+
+.mat-form-field .mat-icon {
+  color: #64748b;
+}
+
+.form-row-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.form-row-dates {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+}
+
+.form-row-return {
+  width: 78%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.date-field .mat-form-field-flex,
+.mat-form-field-appearance-outline .mat-form-field-flex {
+  min-height: 4rem;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-wrapper,
+.mat-form-field .mat-form-field-flex {
+  min-height: 4rem;
+  align-items: center;
+}
+.mat-form-field-infix {
+  padding: 0.85rem 0 0.25rem;
+}
+
+.roundtrip-checkbox {
+  margin-top: 0.4rem;
+}
+
+header {
+  display: grid;
+  gap: 0.3rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.95rem;
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+header p {
+  margin: 0;
+  color: #475569;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.form-group {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.swap-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #f8fafc;
+  color: #0f172a;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.swap-icon:hover {
+  background: #e2e8f0;
+}
+
+.swap-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #0f172a;
+  margin: 0;
+}
+
+input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #0ea5e9;
+}
+
+.search-button {
+  width: 100%;
+  padding: 1.5rem 1.5rem;
+  border-radius: 2rem;
+  border: none;
+  background: #006ce4;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.search-button:hover {
+  background: #012a59;
+  color: white;
+}
+
+.status-message {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  background: #f8fafc;
+  color: #0f172a;
+  text-align: center;
+}
+
+.status-message--error {
+  color: #b91c1c;
+  background: #fef2f2;
+}
+
+.results-panel {
+  display: grid;
+  gap: 2rem;
+}
+
+.back-link {
+  color: #0ea5e9;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #0284c7;
+}
+
+.results-header {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.results-header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  color: #0f172a;
+}
+
+.results-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.empty-state {
+  text-align: center;
+}
+.flight-list,
+.flight-card {
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 860px) {
+  .search-hero {
+    padding: 1rem 0;
+  }
+
+  .form-row-main,
+  .form-row-dates,
+  .flight-card {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row-main {
+    grid-template-columns: 1fr;
+  }
+
+  .swap-icon {
+    transform: rotate(90deg);
+  }
+
+  .flight-card__actions {
+    justify-items: start;
+  }
+}
+.swap-button {
+  width: 52px;
+  height: 52px;
+  border: none;
+  border-radius: 50%;
+  background: #006ce4;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.swap-button:hover {
+  transform: rotate(180deg);
+  background: #0057b8;
+}
+
+.swap-button mat-icon {
+  font-size: 24px;
+}
+@media (max-width: 768px) {
+  .swap-button {
+    margin: 8px auto;
+  }
+}
+
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loader-card {
+  background: white;
+  padding: 32px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.loader-card p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #475569;
+}

@@ -1,0 +1,86 @@
+<div class="booking-container">
+  <header class="page-header">
+    <span class="step-indicator"> Step 3 of 4 </span>
+    <h1>Complete Your Booking</h1>
+    <p>Review your selected flights and enter passenger details.</p>
+  </header>
+  <div class="booking-layout">
+    <section class="booking-form-section">
+      <form [formGroup]="bookingForm" (ngSubmit)="submit()" class="booking-form">
+        <h2>Passenger Details</h2>
+        <mat-form-field appearance="outline">
+          <mat-label>Full Name</mat-label>
+          <input matInput formControlName="fullName" />
+          @if (bookingForm.controls.fullName.invalid && bookingForm.controls.fullName.touched) {
+            <mat-error> Full name is required </mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Email Address</mat-label>
+          <input matInput formControlName="email" />
+          @if (
+            bookingForm.controls.email.hasError('required') && bookingForm.controls.email.touched
+          ) {
+            <mat-error> Email is required </mat-error>
+          }
+          @if (bookingForm.controls.email.hasError('email') && bookingForm.controls.email.touched) {
+            <mat-error> Please enter a valid email address </mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Contact Number</mat-label>
+          <input matInput formControlName="contactNumber" />
+          @if (
+            bookingForm.controls.contactNumber.invalid && bookingForm.controls.contactNumber.touched
+          ) {
+            <mat-error> Contact number is required </mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Number of Passengers</mat-label>
+          <input matInput type="number" min="1" formControlName="passengers" />
+          @if (bookingForm.controls.passengers.invalid && bookingForm.controls.passengers.touched) {
+            <mat-error> Minimum 1 passenger required </mat-error>
+          }
+        </mat-form-field>
+        <div class="form-actions">
+          <button type="button" class="secondary-btn" routerLink="/available-flights">Back</button>
+          <button class="primary-btn" type="submit">Confirm Booking</button>
+        </div>
+      </form>
+    </section>
+    <aside class="booking-summary">
+      <h2>Trip Summary</h2>
+      @if (outboundFlight) {
+        <app-flight-summary-card title="Outbound Flight" [flight]="outboundFlight">
+        </app-flight-summary-card>
+      }
+      @if (returnFlight) {
+        <app-flight-summary-card title="Return Flight" [flight]="returnFlight">
+        </app-flight-summary-card>
+      }
+      <div class="price-summary">
+        <div class="price-row">
+          <span>Passengers</span>
+          <strong>
+            {{ bookingForm.value.passengers || 1 }}
+          </strong>
+        </div>
+        <div class="price-row">
+          <span>Outbound Flight</span>
+          <strong> €{{ outboundFlight?.price ?? 0 }} </strong>
+        </div>
+        @if (returnFlight) {
+          <div class="price-row">
+            <span>Return Flight</span>
+            <strong> €{{ returnFlight.price }} </strong>
+          </div>
+        }
+        <div class="price-row total">
+          <span>Total Price</span>
+          <strong> €{{ totalPrice }} </strong>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>

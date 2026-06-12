@@ -1,0 +1,166 @@
+<div class="search-hero">
+  <section class="search-panel">
+    <header>
+      <h1><mat-icon matPrefix> flight_takeoff </mat-icon> Find Your Perfect Flight</h1>
+      <p>Search and book flights to your favorite destinations</p>
+    </header>
+    <form [formGroup]="searchForm" (ngSubmit)="search()" class="search-form">
+      <div class="form-row-main">
+        <!-- Origin -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label> From </mat-label>
+          <mat-icon matPrefix> flight_takeoff </mat-icon>
+          <input
+            matInput
+            type="text"
+            formControlName="origin"
+            [matAutocomplete]="originAuto"
+            autocomplete="off"
+            placeholder="Select city"
+          />
+          <mat-autocomplete
+            #originAuto="matAutocomplete"
+            (optionSelected)="onOriginSelected($event.option.value)"
+          >
+            @for (option of filteredOrigins(); track option.id) {
+              <mat-option [value]="option">
+                {{ option.label }}
+              </mat-option>
+            }
+          </mat-autocomplete>
+          @if (
+            searchForm.controls.origin.hasError('required') && searchForm.controls.origin.touched
+          ) {
+            <mat-error> Origin city is required </mat-error>
+          }
+          @if (
+            searchForm.controls.origin.touched &&
+            searchForm.controls.origin.value &&
+            !searchForm.controls.originId.value
+          ) {
+            <mat-error> Please select a city from the list </mat-error>
+          }
+        </mat-form-field>
+        <button type="button" class="swap-button" (click)="swapCities()">
+          <mat-icon> swap_horiz </mat-icon>
+        </button>
+
+        <!-- Destination -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label> To </mat-label>
+          <mat-icon matPrefix> flight_land </mat-icon>
+          <input
+            matInput
+            type="text"
+            formControlName="destination"
+            [matAutocomplete]="destinationAuto"
+            autocomplete="off"
+            placeholder="Select city"
+          />
+          <mat-autocomplete
+            #destinationAuto="matAutocomplete"
+            (optionSelected)="onDestinationSelected($event.option.value)"
+          >
+            @for (option of filteredDestinations(); track option.id) {
+              <mat-option [value]="option">
+                {{ option.label }}
+              </mat-option>
+            }
+          </mat-autocomplete>
+          @if (
+            searchForm.controls.destination.hasError('required') &&
+            searchForm.controls.destination.touched
+          ) {
+            <mat-error> Destination city is required </mat-error>
+          }
+          @if (
+            searchForm.controls.destination.touched &&
+            searchForm.controls.destination.value &&
+            !searchForm.controls.destinationId.value
+          ) {
+            <mat-error> Please select a city from the list </mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="form-row-dates">
+        <mat-form-field appearance="outline" class="full-width date-field">
+          <mat-label> Departure Date </mat-label>
+          <input
+            matInput
+            [matDatepicker]="departurePicker"
+            [min]="today"
+            formControlName="departureDate"
+            placeholder="Choose date"
+          />
+          <mat-datepicker-toggle matSuffix [for]="departurePicker"> </mat-datepicker-toggle>
+          <mat-datepicker #departurePicker> </mat-datepicker>
+          @if (
+            searchForm.controls.departureDate.invalid && searchForm.controls.departureDate.touched
+          ) {
+            <mat-error> Departure date is required </mat-error>
+          }
+        </mat-form-field>
+        <mat-checkbox class="roundtrip-checkbox" formControlName="roundTrip">
+          Round Trip
+        </mat-checkbox>
+      </div>
+      @if (isRoundTrip()) {
+        <div class="form-row-return">
+          <mat-form-field appearance="outline" class="full-width date-field">
+            <mat-label> Return Date </mat-label>
+            <input
+              matInput
+              [matDatepicker]="returnPicker"
+              [min]="today"
+              formControlName="returnDate"
+              placeholder="Choose date"
+            />
+            <mat-datepicker-toggle matSuffix [for]="returnPicker"> </mat-datepicker-toggle>
+            <mat-datepicker #returnPicker> </mat-datepicker>
+            @if (searchForm.controls.returnDate.invalid && searchForm.controls.returnDate.touched) {
+              <mat-error> Return date is required </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      }
+
+      <!-- Form-level validation messages -->
+      @if (searchForm.hasError('sameCity')) {
+        <p class="status-message status-message--error">
+          Origin and destination cannot be the same.
+        </p>
+      }
+      @if (searchForm.hasError('invalidDateRange')) {
+        <p class="status-message status-message--error">
+          Return date must be after departure date.
+        </p>
+      }
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        class="search-button"
+        [disabled]="loading()"
+      >
+        @if (!loading()) {
+          Search Flights
+        } @else {
+          Searching...
+        }
+      </button>
+    </form>
+    @if (showError()) {
+      <p class="status-message status-message--error">
+        {{ errorMessage() }}
+      </p>
+    }
+    @if (loading()) {
+      <div class="loader-overlay">
+        <div class="loader-card">
+          <mat-spinner diameter="50"> </mat-spinner>
+          <p>Searching available flights...</p>
+        </div>
+      </div>
+    }
+  </section>
+</div>

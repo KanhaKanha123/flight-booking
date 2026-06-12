@@ -1,0 +1,67 @@
+<div class="flight-summary-card">
+  <div class="flight-summary-header">
+    <h3>
+      {{ title }}
+    </h3>
+    <div class="price">€{{ flight.price }}</div>
+  </div>
+  <div class="flight-route">
+    <div class="airport">
+      <div class="time">
+        {{ flight.departureDate | date: 'HH:mm' }}
+      </div>
+      <div class="city">
+        {{ getCityLabel(flight.originId) }}
+      </div>
+      <div class="date">
+        {{ flight.departureDate | date: 'dd MMM yyyy' }}
+      </div>
+    </div>
+    <div class="route-center">
+      <div class="duration">
+        {{ flight.duration }}
+      </div>
+      <div class="empty-state__icon">
+        <mat-icon>flight_takeoff</mat-icon>
+      </div>
+    </div>
+    <div class="airport">
+      <div class="time">
+        {{ flight.arrivalDate | date: 'HH:mm' }}
+      </div>
+      <div class="city">
+        {{ getCityLabel(flight.destinationId) }}
+      </div>
+      <div class="date">
+        {{ flight.arrivalDate | date: 'dd MMM yyyy' }}
+      </div>
+    </div>
+  </div>
+
+  <div class="flight-meta">
+    <div>
+      <span>Airline</span>
+      <strong>
+        {{ flight.airline }}
+      </strong>
+    </div>
+    <div>
+      <span>Flight Number</span>
+      <strong>
+        {{ flight.flightNumber }}
+      </strong>
+    </div>
+    <div>
+      <span>Duration</span>
+      <strong>
+        {{ flight.duration }}
+      </strong>
+    </div>
+    <div>
+      <span>Seats Available</span>
+      <strong>
+        {{ flight.seatsAvailable }}
+      </strong>
+    </div>
+  </div>
+</div>
