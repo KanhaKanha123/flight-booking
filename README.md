@@ -34,6 +34,8 @@ npm test
 
 A modern Angular 19 flight booking application that simulates a complete flight reservation workflow.
 
+Note: For the best experience, please select travel dates between 15/06/2026 and 10/07/2026. The application uses mock flight data with limited availability outside this date range.
+
 Users can:
 
 - Search for available flights
